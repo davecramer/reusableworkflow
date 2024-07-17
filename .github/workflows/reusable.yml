@@ -41,4 +41,4 @@ jobs:
         id: step3
         run: |
           $json = (Get-Content ${{inputs.config-path}} -Raw) | ConvertFrom-Json
-          write "json=$json" >> $env:GITHUB_OUTPUT
+          write "json=json" >> $env:GITHUB_OUTPUT
