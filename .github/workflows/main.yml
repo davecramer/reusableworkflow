@@ -15,5 +15,5 @@ jobs:
     steps:
     - shell: powershell
       run: |
-       $json = ${{ needs.job1.outputs.json }} | ConvertFrom-Json
+       $json = ($needs.job1.outputs.json) | ConvertFrom-Json
        ($json.packages) | foreach-object {  write "$($_.name.ToUpper())_VERSION=$($_.version)" >> $env:GITHUB_ENV}
