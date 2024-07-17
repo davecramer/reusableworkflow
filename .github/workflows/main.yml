@@ -10,7 +10,10 @@ jobs:
       config-path: ./manifest.json
 
   job2:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     needs: job1
     steps:
-      - run: echo ${{ needs.job1.outputs.json }} ${{ needs.job1.outputs.secondword }}
+    - shell: powershell
+      run: |
+       $json = ${{ needs.job1.outputs.json }} | ConvertFrom-Json
+       ($json.packages) | foreach-object {  write "$($_.name.ToUpper())_VERSION=$($_.version)" >> $env:GITHUB_ENV}
