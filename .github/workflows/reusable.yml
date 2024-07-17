@@ -43,4 +43,5 @@ jobs:
         shell: powershell  
         id: step3
         run: |
-          write "json=$(Get-Content ${{inputs.config-path}} -Raw)" >> $env:GITHUB_OUTPUT
+          $json = (Get-Content ${{inputs.config-path}} -Raw)
+          write "json=$json" >> $env:GITHUB_OUTPUT
