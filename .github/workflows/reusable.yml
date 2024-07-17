@@ -25,23 +25,15 @@ jobs:
     runs-on: windows-latest
     # Map the job outputs to step outputs
     outputs:
-      output1: ${{ steps.step1.outputs.firstword }}
-      output2: ${{ steps.step2.outputs.secondword }}
-      output3: ${{ steps.step3.outputs.json }}
+      output1: ${{ steps.step1.outputs.OPENSSL_VERSION }}
+      output2: ${{ steps.step1.outputs.LIBICONV_VERSION }}
+      output3: ${{ steps.step1.outputs.KRB_VERSION }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v2    
       - name: step1
-        shell: powershell
+        shell: powershell  
         id: step1
-        run: write "firstword=hello" >> $env:GITHUB_OUTPUT
-      - name: step2
-        shell: powershell  
-        id: step2
-        run: write "secondword=world" >> $env:GITHUB_OUTPUT
-      - name: step3
-        shell: powershell  
-        id: step3
         run: |
-          $json = (Get-Content ${{inputs.config-path}} -Raw) | ConvertFrom-Json | ConvertTo-Json -Compress
-          write "json=$json" >> $env:GITHUB_OUTPUT
+          $json = (Get-Content ${{inputs.config-path}} -Raw) | ConvertFrom-Json
+          ($json.packages) | foreach-object {  write "$($_.name.ToUpper())_VERSION=$($_.version)" >> $env:GITHUB_OUTPUT}
