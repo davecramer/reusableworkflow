@@ -9,13 +9,13 @@ on:
         type: string
     # Map the workflow outputs to job outputs
     outputs:
-      firstword:
-        description: "The first output string"
+      OPENSSL_VERSION:
+        description: "Version of openssl"
         value: ${{ jobs.example_job.outputs.output1 }}
-      secondword:
+      LIBICONV_VERSION:
         description: "The second output string"
         value: ${{ jobs.example_job.outputs.output2 }}
-      json:
+      KRB_VERSION:
         description: "JSON data"
         value: ${{ jobs.example_job.outputs.output3}}  
 
