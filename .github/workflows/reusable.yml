@@ -2,6 +2,11 @@ name: Reusable workflow
 
 on:
   workflow_call:
+    inputs:
+      config-path:        
+        required: true
+        default: ./manifest.json
+        type: string
     # Map the workflow outputs to job outputs
     outputs:
       firstword:
@@ -19,7 +24,10 @@ jobs:
     outputs:
       output1: ${{ steps.step1.outputs.firstword }}
       output2: ${{ steps.step2.outputs.secondword }}
+      output3: ${{ steps.step3.outputs.json }}
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v2    
       - name: step1
         shell: powershell
         id: step1
@@ -28,3 +36,9 @@ jobs:
         shell: powershell  
         id: step2
         run: write "secondword=world" >> $env:GITHUB_OUTPUT
+      - name: step3
+        shell: powershell  
+        id: step3
+        run: |
+          $json = (Get-Content ${{inputs.config-path}} -Raw) | ConvertFrom-Json
+          write "json=$json" >> $env:GITHUB_OUTPUT
