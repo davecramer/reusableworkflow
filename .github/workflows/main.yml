@@ -5,7 +5,7 @@ on:
 
 jobs:
   job1:
-    uses: davecramer/reusableworkflow/reusable.yml
+    uses: davecramer/reusableworkflow/.github/workflows/reusable.yml@main
 
   job2:
     runs-on: ubuntu-latest
