@@ -16,4 +16,9 @@ jobs:
     - shell: powershell
       run: |
        $version = ${{needs.job1.outputs.LIBICONV_VERSION}}
-       $version
+       write "LIBICONV_VERSION=${{version}}" >> $env:GITHUB_ENV
+  job3:
+    runs-on: ubuntu-latest
+    needs: job2
+    steps:
+      - run: echo $env.LIBICONV_VERSION
